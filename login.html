@@ -49,15 +49,28 @@
                         autocomplete="off"
                     >
                         <p class="errMsg" name="errMsg"></p>
-                        <input type="email" name="email" id="email" required />
+                        <label for="username">username</label>
+                        <input
+                            type="text"
+                            name="username"
+                            id="username"
+                            placeholder="John233"
+                            required
+                        />
+                        <label for="password">Password</label>
                         <input
                             type="password"
                             name="password"
                             id="password"
+                            placeholder="Password"
                             required
                         />
                         <p>
                             <a href="#">Forgot your password</a>
+                        </p>
+                        <p>
+                            No Account?
+                            <a href="register.html">Register with us</a>
                         </p>
                         <button type="submit">login</button>
                     </form>
