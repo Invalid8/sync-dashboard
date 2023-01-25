@@ -70,3 +70,5 @@ function outlineValidated(bool, inputType) {
         ? (inputType.style.outlineColor = "green")
         : (inputType.style.outlineColor = "red");
 }
+
+console.log("red");
