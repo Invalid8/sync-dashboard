@@ -8,19 +8,35 @@ $(document).ready(function () {
     });
     $("#username").bind("input", () => {
         determineError(1);
-        outlineValidated(checkAllTrue(value1, value2), $("#username")[0]);
         setModaLenght(value1, "username", 1);
         checkForDigit(value2, "username");
+        outlineValidated(checkAllTrue(value1, value2), $("#username")[0]);
     });
     $("#password").bind("input", () => {
         determineError(2);
         setModaLenght(value1, "password", 2);
         checkForDigit(value2, "password");
         EqualPassword(value3, "password", "comfirm_password");
+        outlineValidated(
+            checkAllTrue(value1, value2, value3),
+            $("#password")[0]
+        );
+        outlineValidated(
+            checkAllTrue(value1, value2, value3),
+            $("#comfirm_password")[0]
+        );
     });
     $("#comfirm_password").bind("input", () => {
         determineError(2);
         EqualPassword(value3, "password", "comfirm_password");
+        outlineValidated(
+            checkAllTrue(value1, value2, value3),
+            $("#password")[0]
+        );
+        outlineValidated(
+            checkAllTrue(value1, value2, value3),
+            $("#comfirm_password")[0]
+        );
     });
 });
 
@@ -53,11 +69,15 @@ const EqualPassword = (value, selector1, selector2) => {
         ? value.classList.add("correct")
         : value.classList.remove("correct");
 };
-
 const checkAllTrue = (...value) => {
+    let bool = false;
     value.every((type) => {
-        return type.classList.contains("correct");
+        console.log(type.classList.contains("correct"));
+        return type.classList.contains("correct")
+            ? (bool = true)
+            : (bool = false);
     });
+    return bool;
 };
 
 function ValidateEmail(email) {
@@ -65,10 +85,8 @@ function ValidateEmail(email) {
     return email.value.match(mailformat);
 }
 
-function outlineValidated(bool, inputType) {
-    bool
+function outlineValidated(boot, inputType) {
+    boot
         ? (inputType.style.outlineColor = "green")
         : (inputType.style.outlineColor = "red");
 }
-
-console.log("red");
