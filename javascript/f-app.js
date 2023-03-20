@@ -1,15 +1,15 @@
 let value1, value2, value3;
-
+const checks = [0, 0, 0]
 $(document).ready(function () {
-    $(`ul.log${1}`).css("display", "none");
-    $(`ul.log${2}`).css("display", "none");
     $("#email").bind("input", () => {
         outlineValidated(ValidateEmail($("#email")[0]), $("#email")[0]);
+        ValidateEmail($("#email")[0]) ? checks[0] = 1 : checks[0] = 0
     });
     $("#username").bind("input", () => {
         determineError(1);
         setModaLenght(value1, "username", 1);
         checkForDigit(value2, "username");
+        checkAllTrue(value1, value2) ? checks[1] = 1 : checks[1] = 0
         outlineValidated(checkAllTrue(value1, value2), $("#username")[0]);
     });
     $("#password").bind("input", () => {
@@ -17,6 +17,7 @@ $(document).ready(function () {
         setModaLenght(value1, "password", 2);
         checkForDigit(value2, "password");
         EqualPassword(value3, "password", "comfirm_password");
+        checkAllTrue(value1, value2, value3) ? checks[2] = 1 : checks[2] = 0
         outlineValidated(
             checkAllTrue(value1, value2, value3),
             $("#password")[0]
@@ -29,6 +30,7 @@ $(document).ready(function () {
     $("#comfirm_password").bind("input", () => {
         determineError(2);
         EqualPassword(value3, "password", "comfirm_password");
+        checkAllTrue(value1, value2, value3) ? checks[2] = 1 : checks[2] = 0
         outlineValidated(
             checkAllTrue(value1, value2, value3),
             $("#password")[0]
@@ -38,7 +40,13 @@ $(document).ready(function () {
             $("#comfirm_password")[0]
         );
     });
+
+    document.querySelector("#form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (checkAllTrueNormJs(...checks)) location.href = "/";
+    })
 });
+
 
 const determineError = (num) => {
     value1 = $(`ul.log${num} li`)[0];
@@ -48,8 +56,8 @@ const determineError = (num) => {
 };
 const setModaLenght = (value, selector, num) => {
     $(`#${selector}`).val().length > num
-        ? $(`ul.log${num}`).css("display", "block")
-        : $(`ul.log${num}`).css("display", "none");
+        ? $(`ul.log${num}`)[0].classList.add("visible")
+        : $(`ul.log${num}`)[0].classList.remove("hidden");
     $(`#${selector}`).val().length >= 8 && $(`#${selector}`).val().length <= 15
         ? value.classList.add("correct")
         : value.classList.remove("correct");
@@ -70,12 +78,19 @@ const EqualPassword = (value, selector1, selector2) => {
         : value.classList.remove("correct");
 };
 const checkAllTrue = (...value) => {
-    let bool = false;
+    let bool;
     value.every((type) => {
-        console.log(type.classList.contains("correct"));
         return type.classList.contains("correct")
             ? (bool = true)
             : (bool = false);
+    });
+    return bool;
+};
+
+const checkAllTrueNormJs = (...value) => {
+    let bool;
+    value.every((type) => {
+        return type ? (bool = true) : (bool = false);
     });
     return bool;
 };
@@ -87,6 +102,6 @@ function ValidateEmail(email) {
 
 function outlineValidated(boot, inputType) {
     boot
-        ? (inputType.style.outlineColor = "green")
-        : (inputType.style.outlineColor = "red");
+        ? (inputType.className = "good")
+        : (inputType.className = "bad")
 }

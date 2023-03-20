@@ -2,11 +2,11 @@ $(document).ready(function () {
     $(document).scroll(() => {
         $(document).scrollTop() > $(".banner-section").offset().top
             ? $(".bottom .moreUsers").css("display", "block") &&
-              $("#header").removeClass("dark-bg030c30") &&
-              $("#header").addClass("light-bgfff")
+            $("#header").removeClass("dark-bg030c30") &&
+            $("#header").addClass("light-bgfff")
             : $(".bottom .moreUsers").css("display", "none") &&
-              $("#header").addClass("dark-bg030c30") &&
-              $("#header").removeClass("light-bgfff");
+            $("#header").addClass("dark-bg030c30") &&
+            $("#header").removeClass("light-bgfff");
     });
     $(".cnt-btn1, .cnt-btn2").click(function (event) {
         event.preventDefault();
@@ -14,7 +14,7 @@ $(document).ready(function () {
             {
                 scrollTop: $("footer").offset().top,
             },
-            800
+            0
         );
     });
     $(".next-section").on("click", function (event) {
@@ -22,7 +22,7 @@ $(document).ready(function () {
             {
                 scrollTop: $(".companies-section").offset().top - 90,
             },
-            800
+            0
         );
     });
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
             {
                 scrollTop: $("#Home").offset().top - 90,
             },
-            800
+            0
         );
     });
 
